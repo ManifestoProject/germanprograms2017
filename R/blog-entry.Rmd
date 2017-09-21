@@ -1,0 +1,104 @@
+---
+title: 'Besser als die gefühlte Wahrheit: Eine Wahlprogrammanalyse von SPD und Union
+  des Manifesto Projekts'
+author: "Pola Lehmann, Theres Matthieß, Nicolas Merz, Sven Regel"
+output:
+  html_document: default
+  word_document: default
+---
+
+<!-- set up usage of graphs from production report markdown -->
+```{r, echo = FALSE, warning = FALSE, message = FALSE }
+library(knitr)
+invisible(purl("election_report_production.Rmd", output = "temp", quiet = TRUE))
+read_chunk(lines = readLines("temp", encoding = "UTF-8"))
+knitr::opts_chunk$set(fig.path='Figs/')
+```
+
+```{r ref.label = 'setup', echo = FALSE, warning = FALSE, message = FALSE }
+```
+
+```{r ref.label = 'conf'}
+```
+
+```{r ref.label = 'load'}
+```
+<!-- (finished) set up usage of graphs from production report markdown -->
+
+
+Der aktuelle Wahlkampf ist vor allem ein Kampf gegen die Langeweile. Das TV-Duell war mehr Stimmungskiller als Höhepunkt: Ob Renteneintrittsalter oder Flüchtlingspolitik - große Unterschiede zwischen SPD und Union waren nur mit der Lupe auszumachen. Auch sonst scheint der Wahlkampf nicht unbedingt von Themen getrieben zu sein ("Für ein Deutschland, in dem wir gut und gerne leben."). Stattdessen ist die öffentliche Diskussion eher von den neuesten Umfragen der unterschiedlichen Meinungsforschungsinsitute geprägt: kommt die AfD auf ein zweistelliges Ergebnis, sinkt die SPD auf 20% oder wer wird drittstärkste Kraft? Auch nicht alle Politikwissenschaftler können spontan (Reaktionszeit < 5 Sekunden) Unterschiede zwischen den beiden Parteien nennen: Das ist zumindest das Ergebnis einer nicht-repräsentativen Umfrage (n < 5, Selbstbefragung und Mehrfachbefragung nicht ausgeschlossen). "Merkel" als Antwort haben wir nicht zählen lassen. Aber solche gefühlten Wahrheiten - sogar jene von Politikwissenschaftlern - können trügen. Wir leisten Abhilfe. 
+
+Der folgende Beitrag basiert auf einer Analyse der Wahlprogramme von Union und SPD. Die analysierten Daten erheben wir im Rahmen des [Manifesto Project](https://www.manifesto-project.de). Wir schauen uns die Position der beiden Kontrahenten auf den zwei zentralen Konfliktdimensionen an, vergleichen Thematisierungsstrategien zwischen den Parteien sowie über Zeit und werfen einen Blick auf einige ausgewählte Sachfragenpositionen.
+
+# Wo geht die Reise hin - links, rechts oder einfach durch die Mitte?
+
+Häufig finden unsere Daten Verwendung, um zu bestimmen, wie links oder rechts die Positionen einer Partei sind. Dies lässt sich über die relative Häufigkeit der Betonung linker oder rechter Themen messen. Oft wird dies auf einer einzelnen Links-Rechts-Dimension gemacht. Ein differenzierteres Bild ergibt sich allerdings, wenn man sich die Positionen auf zwei Dimensionen anschaut.
+Der Vorteil von zwei Dimensionen ist, dass auch Veränderungen sichtbar gemacht werden können, die sich auf einer allgemeinen Links-Rechts-Dimension gegenseitig ausgleichen. Eine Partei, welche beispielsweise ökonomisch linker und gesellschaftlich rechter wird, verändert ihre allgemeine Links-Rechts-Position vermeintlich gar nicht. 
+
+Die erste der beiden Dimensionen ist die sozio-ökonomische Konfliktdimension, in der es um das Verhältnis von Markt und Staat geht. Ökonomisch rechte Positionen sind solche, welche mehr Markt und weniger Staat befürworten, z.B. positive Referenzen auf die freie Marktwirtschaft, Vermeidung von Staatsschulden und der Rückbau des Wohlfahrtsstaates.
+Als ökonomisch links werden hier Sätze eingeordnet, welche das Gegenteil fordern: Die stärkere Regulierung des Marktes durch den Staat, Schutz von Verbrauchern und der Ausbau des Wohlfahrtsstaates.
+
+```{r ref.label = 'plot_eco'}
+```
+
+Auf der ökonomischen Konfliktdimension zeigt sich, dass die SPD und die Union seit 2005 immer weiter nach links gerückt sind. Das Programm zur Wahl 2017 stellt für die SPD den ersten ökonomischen Wechsel nach rechts seit 2005 dar. Allerdings ist die Veränderung relativ gering und man könnte ebenso schlussfolgern, dass die Position sich seit 2009 auf ungefähr gleichem Niveau eingependelt hat. Die Union, die 2005 mit einem sehr wirtschaftsliberalen Programm antrat (Stichwort: Paul Kirchhofs neue Einkommenssteuer) ist seit 2005 kontinuierlich nach links gerückt. Auf der ökonomischen Dimension kommt es also in der Tat zu einer leichten Konvergenz und einer geringeren Distanz als bei vergangenen Wahlen. Die Distanz war 2002 allerdings schon mal deutlich geringer. 
+
+Die zweite Dimension ist die gesellschaftliche Konfliktdimension, mit einem konservativ-autoritären und liberal-progressiven Pol: Als gesellschaftlich konservativ-autoritäre Statements gelten Aussagen, welche nationalstaatliches und patriotisches Denken befürworten, konservative Moralvorstellungen propagieren, Multikulturalismus ablehnen und eine Stärkung der inneren Sicherheit fordern. Als gesellschaftlich liberal-progressive Statements zählen positive Referenzen auf Demokratie, Freiheit, Menschen- sowie Bürgerrechte, die Unterstützung von Multikulturalismus, progressive Moralvorstellungen und die Ablehnung nationalstaatlichen Denkens.
+
+```{r ref.label = 'plot_soc'}
+```
+
+Die aktuellen Programme setzen den Trend von 2013 fort und bewegen sich auf der gesellschaftlichen Ebene leicht nach rechts, womit beide Parteien sich wieder ihrer Position von 2005 annähern. Allerdings ist die Rechts-Verschiebung kein "Rechtsruck", sondern lediglich eine kleine Verschiebung. Die Parteien sind damit noch weit entfernt von ihrer jeweils konservativsten Position in den 90ern und frühen 2000ern. Dies spiegelt den gesellschaftlichen Wandel seit den 90er Jahren wider.  
+
+
+# Spielen Kernthemen noch eine Rolle?
+
+Neben diesem abstrakten Blick auf die Positionen der Parteien im zwei-dimensionalen Raum, lohnt sich ein Blick auf die einzelnen Themen, die den Parteien besonders am Herzen liegen.
+Die wichtigsten Themen für die Unionsparteien sind Technologie & Infrastruktur, Wahrung nationaler Identität (Nationalismus) und Wohlfahrtsstaatsausbau. Der Ausbau der Infrastruktur und des Wohlfahrtsstaats haben bereits in der Vergangenheit eine zentrale Bedeutung in der Unions-Programmatik eingenommen. Die positive Referenz im Hinblick auf nationalstaatliches Denken stellt allerdings eine Neuerung dar, welche das aktuelle Wahlprogramm von vergangenen Programmen unterscheiden. Unter diese Kategorie fallen auch kritische und negative Aussagen gegenüber Einwanderung. 
+
+```{r ref.label = 'most_important_issue_bars'}
+```
+
+Die Sozialdemokraten betonen am stärksten die Themen soziale Gerechtigkeit und ebenfalls Wohlfahrtsstaat sowie Infrastruktur, dabei zeigen besonders die Forderungen nach mehr sozialer Gerechtigkeit und Wohlfahrtsstaatsausbau eine Kontinuität in der Geschichte der SPD. 
+Deutliche Unterschiede zu vergangenen Wahlprogrammen der Sozialdemokraten zeigen sich in Bezug auf die EU und die Sicherung der öffentlichen Ordnung (Law & Order).
+So betont die SPD eine "Law-and-Order" Politik mehr als sonst - bei dieser Wahl sogar stärker als die Union. 
+
+```{r ref.label = 'most_important_issue_with_context'}
+```
+
+Ein Thema gibt es, das interessanterweise bei beiden Parteien im Vergleich zur Vergangenheit deutlich an Bedeutung gewonnen hat: die Forderung nach einer nachhaltigeren Politik. Dies scheint einen allgemeinen gesellschaftlichen Trend wiederzugeben. Nachhaltigkeit ist kein Nischenthema mehr, sondern längst Teil des öffentlichen Mainstreams geworden. Das schlägt sich auch in der Programmatik der etablierten Parteien nieder. 
+
+
+
+# Alle vier Jahre alles neu? 
+
+Zum Schluss wagen wir noch einen Blick auf die Wahlprogramme aus der Vergangenheit. Bleiben die Parteien sich treu oder verändern sie ihre Programme stark von einer zur anderen Wahl?
+Die untenstehende Abbildung zur "Ähnlichkeit der Thematisierungsstrategien" gibt den Grad der Übereinstimmung bei der thematischen Schwerpunktsetzung zwischen zwei Bundestagswahlprogrammen zwischen 1990 und 2017 an - innerhalb einer Partei und zwischen Union und SPD. Die Skala, auf der die Ähnlichkeit hier angegeben ist, geht von Null bis Hundert. Ein Wert von Null gibt an, dass eine Partei die gleichen Themen mit gleicher Häufigkeit betont. Ein Wert von 100 würde bedeuten, dass eine Partei über gänzlich andere Themen spricht. Je dunkler eine Kachel, desto ähnlicher die Programme. Die Diagonale von links unten nach rechts oben (weiß umrahmte Kacheln) gibt die Ähnlichkeit zwischen den Programmen von SPD und Union wieder.
+
+Ein deutlicher Trend der Annäherung zwischen den Parteien ist sichtbar. Während die Programme sich 1990 noch fast in der Hälfte der Aussagen deutlich voneinander unterschieden, sind es 2017 nur noch knapp 30%. Oberhalb der Diagonale ist ersichtlich, wie sich einzelne SPD-Programme voneinander unterscheiden. Unterhalb der Diagonalen zeigt sich das selbe für die Unions-Programme. Der Vergleich innerhalb der Parteien zeigt, dass die SPD schon immer relativ kontinuierlich in ihrer programmatischen Linie war und nur relativ wenig Veränderung von einer zur nächsten Wahl aufweist. Bei der Union war das nicht immer der Fall. So hat diese in den 2000ern noch deutlich größere programmatische Änderungen von einer zur nächsten Wahl vorgenommen. Seit 2009 hat die Veränderungsrate deutlich abgenommen. 
+
+
+Eines gilt für beide Parteien: ganz besonders gering ist die Veränderung von 2013 auf 2017. Bei beiden Parteien müssten lediglich 22% ihrer Aussagen umgeschrieben werden, um exakt die gleiche Thematisierungsstrategie zu erhalten wie bei den Bundestagswahlprogrammen 2013. 
+
+```{r ref.label = 'distances'}
+```
+
+
+# Gefühlte Wahrheit versus wissenschaftliche Analyse 
+
+Wie war das nochmal mit der gefühlten Wahrheit - die Parteien unterscheiden sich kaum und um Inhalte geht es ihnen nicht? Kann unsere Analyse dieses Gefühl bestärken oder zeigt sie, dass sich doch nochmal ein genauerer Blick in die Wahlprogramme lohnt? Die Wahlprogramme aller Parteien zu lesen [dauert nur 17 Stunden](http://www.zeit.de/politik/deutschland/2017-08/bundestagswahl-wahlprogramme-parteien-computeranalyse), bis Sonntag ist also noch genug Zeit. Wem die Zeit dafür dennoch fehlt, dem konnte unsere Analyse zumindest einen kleinen Einblick geben, wo die SPD und Union sich auch heute unterscheiden und für welche Themen sie sich einsetzen. Auch wenn sich die thematische Schwerpunktsetzung in den Wahlprogrammen der beiden Parteien ähneln, zeigt ein detaillierter Blick doch, dass es besonders bei gesellschaftspolitischen Fragen große Unterschiede zwischen den Parteien gibt. Wichtigstes Thema für die Union ist die Stärkung der nationalen Identität - ein Thema, welches die SPD fast gar nicht beschäftigt. Soziale Gerechtigkeit steht im Mittelpunkt der SPD-Programmatik und wird mehr als doppelt so oft betont wie von den Unionsparteien. Und das ist nur die Spitze des Eisbergs - mehr davon in den Wahlprogrammen der Parteien!
+
+
+
+
+# *Woher kommen die Daten nochmal?*
+
+*Die Wahlprogramme werden von uns erst in ein standardisiertes maschinenlesbares Format gebracht. Ein Experte unterteilt dann jedes Wahlprogramm in einzelne Statements. Jedes Statement wird einer von über 70 thematischen Kategorien zugeordnet. Diese umfassen beispielsweise den "Ausbau des Wohlfahrtsstaates", "Umweltschutz", "Marktregulierung". Unsere Analyse basiert auf den relativen Häufigkeiten dieser Kategorien. Dafür werden manchmal mehrere inhaltlich verwandte Kategorien zu einer Konfliktdimension zusammengefasst. In einem älteren Blogeintrag erläutern wir die Methode und das Projekt detaillierter.*
+
+# *Was ist eigentlich mit den anderen Parteien?*
+
+*Unsere Analyse braucht Zeit. Da die Programme in der Regel erst wenige Monate vor der Wahl erscheinen und teilweise mehrere hundert Seiten umfassen, dauert allein die Kodierung der Programme mehrere Monate. Für gewöhnlich sind unsere Daten erst Monate oder gar Jahre nach der Wahl verfügbar. Für die wissenschaftliche Verwertung ist das nicht schlimm. Für die Bundestagswahl haben wir eine Ausnahme gemacht und uns besonders beeilt, um einer breiteren Öffentlichkeit eine Analyse zu präsentieren. Leider war es aufgrund der Länge der Programme nicht möglich die Kodierung aller Programme vor der Wahl abzuschließen. Unser aktueller Coder für die Wahlprogramme zur Bundestagswahl ist Özgür Özvatan. Wir danken ihm herzlich für die Kodierung der Daten.*
+
+# *Quellcode*
+
+*Der Quellcode zur Analyse sowie die Rohdaten sind [hier einsehbar](https://github.com/ManifestoProject/germanprograms2017).*

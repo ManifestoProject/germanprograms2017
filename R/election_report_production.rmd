@@ -1,0 +1,132 @@
+---
+title: "election report"
+output: "html_notebook"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(knitr)
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(ggplot2)
+library(manifestoR)
+library(lubridate)
+source("election_report_helper.r")
+```
+
+```{r conf}
+# configuration
+countryname = "Germany"
+min_date = 199000
+max_date = 210000
+election_date = 201709
+parties = c(41320, 41521)
+party_colors = c("SPD" = "#C0414A", "FDP" = "#B7A94E", "CDU/CSU" = "#484848", "Die Grünen" = "#4EB33B", "Die Linke." = "#8C42AE")
+manual_scale_labels_de = c(
+                           "per504" = "Ausbau Wohlfahrtsstaat",
+                           "per411" = "Technologie & Infrastruktur",
+                           "per403" = "Regulierung des Markts",
+                           "per108" = "Pro-Europäische Union", 
+                           "per605" = "\"Law and Order\"", 
+                           "per601" = "Nationalismus", 
+                           "per416" = "Nachhaltigkeit",
+                           "per107" = "Internationalismus",
+                           "per503" = "Soziale Gerechtigkeit",
+                           "per701" = "Gewerkschaften",
+                           "411" = "Technologie & Infrastruktur",
+                           "504" = "Ausbau Wohlfahrtsstaat",
+                           "403" = "Regulierung des Markts",
+                           "108" = "Pro-Europäische Union", 
+                           "605" = "\"Law and Order\"", 
+                           "601" = "Nationalismus", 
+                           "416" = "Nachhaltigkeit",
+                           "107" = "Internationale Zusammenarbeit",
+                           "503" = "Soziale Gerechtigkeit",
+                           "701" = "Arbeitnehmer")
+
+scales_selection = c("soc", "eco")
+
+coding_schemes_path = "../input/"
+fun_merge_parties = function(party) { 
+  case_when(
+    party %in% c(41112, 41113) ~ as.integer(41113),
+    party %in% c(41221, 41222, 41223) ~ as.integer(41223),
+    TRUE ~ party
+  )
+}
+fun_recode_parties = function(party, partyname = NULL) {
+  recode(party, "41320" = "SPD", "41521" = "CDU/CSU")
+}
+fun_load_data = function() {
+  read_csv("../input/41_1990-2017-2.csv", guess_max = 100000) %>% 
+  mutate(countryname = "Germany")
+}
+```
+
+```{r load}
+# load data
+data = fun_load_data() %>%
+  select(countryname, date, edate, party, matches("^per[0-9]")) %>%
+  mutate(party = fun_merge_parties(party)) %>%
+  filter(date >= !!min_date & date <= !!max_date) %>%
+  filter(countryname == !!countryname) %>%
+  filter(party %in% parties) %>% 
+  mutate(party = as.character(party)) %>%
+  mutate(party = fun_recode_parties(party))
+
+# data modification
+data = data %>%
+  add_scales(scales[scales_selection])
+
+data_scales = data %>%
+  select(-matches("^per"))
+```
+
+```{r plot_soc}
+line_plot(data %>% mutate(date = edate), soc) +
+  labs(title = "Positionen in den Wahlprogrammen (Gesellschaftliche Konfliktdimension)", x = "", y = "\U2190 liberal-progressiv — konservativ-autoritär \U2192", color = "", caption="Quelle: Manifesto Project, WZB") +
+  scale_color_manual("", values = party_colors) +
+  scale_y_continuous(limits = c(-25, 25)) +
+  scale_x_date(breaks = unique(sort(data$edate)), labels = year(unique(sort(data$edate))))
+```
+
+```{r plot_eco}
+line_plot(data %>% mutate(date = edate), eco) +
+  labs(title="Positionen in den Wahlprogrammen (Ökonomische Konfliktdimension)", x = "", y = "   \U2190 Mehr Staat — Weniger Staat \U2192", color = "", caption="Quelle: Manifesto Project, WZB") +
+  scale_color_manual("", values = party_colors) +
+  scale_y_continuous(limits = c(-30, 30)) +
+  scale_x_date(breaks = unique(sort(data$edate)), labels = year(unique(sort(data$edate))))
+```
+
+```{r most_important_issue_with_context}
+issues_with_previous_context_plot(data, election_date, per108, per605, per601, per416, facet_col = 1, scales_free = "fixed", labels = manual_scale_labels_de) +
+  # geom_blank(data = dummy) + -> for individual axes limits in facets 
+  scale_y_continuous(breaks = seq(0, 15, by = 2.5), labels = paste0(str_replace_all(seq(0, 15, by = 2.5), fixed("."), ","), "%")) +
+  labs(x = "", y = "Anteil der Statements im Wahlprogramm", color = "", title = "Betonung einzelner Themen in den Wahlprogrammen", caption ="Rot: 2017
+Schwarz: 1990-2013
+       Quelle: Manifesto Project, WZB")
+```
+
+```{r most_important_issue_bars}
+most_important_issue_bars_2parties(data %>% select(party, date, matches("^per[0-9]{3}$")), election_date, n = 5, labels = manual_scale_labels_de, bar_alpha = .5) + 
+  scale_y_continuous(breaks = seq(0, 7.5, by = 2.5), labels = paste0(str_replace_all(seq(0, 7.5, by = 2.5), fixed("."), ","), "%")) +
+  labs(title="Am stärksten betonte Themen in den 2017er Wahlprogrammen", y = "Anteil der Statements im Wahlprogramm", caption="Der eingerahmte Balken gibt die Betonung der jeweiligen Partei an. 
+Der dunkle bzw. graue Balken gibt die Betonung der anderen Partei an.
+       Quelle: Manifesto Project, WZB")
+```
+
+
+```{r distances}
+#issues_distance_plot(data %>% mutate(date = floor(date/100))) +
+#  labs(fill = "")
+issues_distance_plot_2parties(data %>% mutate(date = floor(date/100))) +
+  labs(title = "Ähnlichkeit der Thematisierungsstrategien",caption = "0 = gleiche Thematisierungsstrategie, 100 = Betonung komplett anderer Themen.
+       Die Diagonale gibt die Unterschiede zwischen CDU/CSU und SPD an. 
+Werte oberhalb der Diagonalen beziehen sich auf die Programme der SPD.
+Werte unterhalb der Diagonalen beziehen sich auf die Programme von CDU/CSU.
+Quelle: Manifesto Project, WZB
+       ", fill = "")
+```
